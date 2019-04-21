@@ -1,3 +1,8 @@
 node_modules
 db/*.sqlite
 *.pem
+.idea
+my-private.key
+my-public.key
+my-request.csr
+my-certificate.crt

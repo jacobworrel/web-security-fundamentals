@@ -6,7 +6,10 @@
 
 var app = require('./server/index.js');
 var debug = require('debug')('strawbank:server');
-var http = require('http');
+var https = require('https');
+const fs = require('fs');
+const path = require('path');
+
 
 /**
  * Get port from environment and store in Express.
@@ -27,7 +30,11 @@ app.set('port', port);
 ////    key: fs.readFileSync('filename'),
 ////    passphrase: 'key-passphrase'
 ////  }, app);
-var server = http.createServer(app);
+var server = https.createServer({
+  cert: fs.readFileSync(path.join(__dirname, 'my-certificate.crt')),
+  key: fs.readFileSync(path.join(__dirname, 'my-private.key')),
+  passphrase: process.env.PASSPHRASE,
+}, app);
 
 /**
  * Listen on provided port, on all network interfaces.
